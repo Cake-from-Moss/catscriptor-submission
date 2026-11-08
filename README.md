@@ -22,7 +22,7 @@ Android-приложение для хакатона Nuclear IT Hack. Превр
 | 4 | Архитектура и модели | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), таблица моделей ниже |
 | 5 | Ограничения решения | [`docs/LIMITATIONS.md`](docs/LIMITATIONS.md) |
 | 6 | Результаты собственных тестов | [`docs/TEST_RESULTS.md`](docs/TEST_RESULTS.md), [`artifacts/test-results`](artifacts/test-results) |
-| 7 | Видеодемонстрация | Ссылка: **будет добавлена до сдачи** (см. [`artifacts/demo`](artifacts/demo)) |
+| 7 | Видеодемонстрация | Видео в репозиторий не включено: демонстрацию команда проводит самостоятельно (см. [`artifacts/demo`](artifacts/demo)) |
 
 Формат обмена данными (схема JSON и вспомогательные форматы): [`docs/PROTOCOL.md`](docs/PROTOCOL.md).
 
