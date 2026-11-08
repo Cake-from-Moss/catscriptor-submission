@@ -36,6 +36,5 @@ Debug APK: `app/build/outputs/apk/debug/app-debug.apk` (около 2 ГБ, мо�
 ```
 
 Пользовательская инструкция (установка APK, импорт, экспорт JSON) — в корневом [`README.md`](../README.md).
-Подробности архитектуры и моделей: [`../docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md),
-[`mobile/android/README.md`](mobile/android/README.md) (таблица моделей с контрольными суммами),
-[`mobile/android/docs/`](mobile/android/docs) (диаризация, ASR, LLM, оценка).
+Архитектура: [`../docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md). Таблица моделей с контрольными суммами:
+[`mobile/android/README.md`](mobile/android/README.md).
