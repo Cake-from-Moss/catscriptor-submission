@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Шапка -->
+    <string name="home_title">CatScriptor</string>
+    <string name="home_settings">Настройки</string>
+
+    <!-- Пилюля записи -->
+    <string name="home_start_recording">Начать запись</string>
+    <string name="home_stop_recording">Остановить запись</string>
+    <string name="home_on_device_only">Обработка только на телефоне</string>
+    <string name="home_will_be_queued">Встанет в очередь обработки</string>
+    <string name="home_mic_permission_title">Нужен доступ к микрофону</string>
+    <string name="home_mic_permission_request">Нажмите, чтобы разрешить</string>
+    <string name="home_open_settings">Открыть настройки</string>
+    <string name="home_recording_paused_label">Пауза</string>
+
+    <!-- Ряд кнопок -->
+    <string name="home_live_text">Live-текст</string>
+    <string name="home_live_text_on">включён</string>
+    <string name="home_live_text_off">выключен</string>
+    <string name="home_upload_file">Загрузить файл</string>
+    <string name="home_pause">Пауза</string>
+    <string name="home_resume">Продолжить</string>
+
+    <!-- Недавние и пустое состояние -->
+    <string name="home_recents">Недавние</string>
+    <string name="home_all_recordings">Все записи</string>
+    <string name="home_empty_state">Нажмите на микрофон или загрузите файл</string>
+    <string name="home_speaker_label">Спикер %1$d</string>
+    <string name="home_preview_line">%1$s: %2$s</string>
+    <string name="home_source_microphone">Запись с микрофона</string>
+    <string name="home_source_file">Файл</string>
+
+    <!-- Обработка -->
+    <string name="home_in_processing">В обработке</string>
+    <string name="home_percent">%1$d%%</string>
+    <string name="home_remaining_about">осталось около %1$d мин</string>
+    <string name="home_meta_separator">" · "</string>
+    <string name="home_queued">В очереди</string>
+    <string name="home_failed_at">Ошибка: %1$s</string>
+    <string name="home_source_meta_microphone">запись с микрофона</string>
+    <string name="home_source_meta_file">импорт из файла</string>
+    <string name="home_processed_of">%1$s из %2$s</string>
+    <string name="home_stage_prepare_audio">Подготовка аудио</string>
+    <string name="home_stage_prepare_audio_hint">Перевод в 16 кГц моно, шумоподавление</string>
+    <string name="home_stage_detect_speech">Поиск речи</string>
+    <string name="home_stage_detect_speech_hint">Убираем паузы и шумы (VAD)</string>
+    <string name="home_stage_transcribe">Распознавание речи</string>
+    <string name="home_stage_transcribe_hint">Перевод речи в текст</string>
+    <string name="home_stage_diarize">Определение говорящих</string>
+    <string name="home_stage_diarize_hint">Диаризация</string>
+    <string name="home_stage_correct_text">Пунктуация и правка</string>
+    <string name="home_stage_correct_text_hint">Локальная LLM</string>
+    <string name="home_stage_failed">Этап завершился с ошибкой</string>
+    <string name="home_stage_skipped">Пропущено</string>
+    <string name="home_stage_state_done">готово</string>
+    <string name="home_stage_state_running">выполняется</string>
+    <string name="home_stage_state_pending">ожидает</string>
+    <string name="home_stage_state_failed">ошибка</string>
+    <string name="home_stage_state_skipped">пропущено</string>
+    <string name="home_cancel">Отменить</string>
+    <string name="home_collapse">Свернуть в фон</string>
+    <string name="home_retry">Повторить</string>
+    <string name="home_skip_stage">Сохранить без этого этапа</string>
+    <string name="home_expand_processing">Показать этапы обработки</string>
+
+    <!-- Live-текст -->
+    <string name="home_live_header">Текст записи</string>
+    <string name="home_live_draft">черновик</string>
+    <string name="home_live_waiting">Говорите — Live-текст появится после распознавания фразы</string>
+    <string name="home_jump_to_latest">К новому</string>
+
+    <!-- Запись без Live-текста -->
+    <string name="home_recording_now">Идёт запись · микрофон телефона</string>
+    <string name="home_recording_on_pause">Пауза · микрофон телефона</string>
+    <string name="home_add_mark">Отметить момент</string>
+    <string name="home_marks">Отметки</string>
+    <string name="home_no_live_hint">Расшифровка начнётся после остановки записи</string>
+    <string name="home_recording_foreground_hint">Оставайтесь в приложении, пока идёт запись</string>
+    <string name="home_level_normal">Уровень сигнала в норме</string>
+    <string name="home_level_too_quiet">Слишком тихо, поднесите телефон ближе</string>
+    <string name="home_level_silence">Тишина</string>
+    <string name="home_level_clipping">Слишком громко, звук искажается</string>
+    <string name="home_level_meter_description">Уровень сигнала: %1$d из %2$d</string>
+    <string name="home_recording_announcement">Идёт запись: %1$s %2$s</string>
+    <string name="home_recording_announcement_paused">Запись на паузе: %1$s %2$s</string>
+    <plurals name="home_minutes">
+        <item quantity="one">%d минута</item>
+        <item quantity="few">%d минуты</item>
+        <item quantity="many">%d минут</item>
+        <item quantity="other">%d минуты</item>
+    </plurals>
+    <plurals name="home_seconds">
+        <item quantity="one">%d секунда</item>
+        <item quantity="few">%d секунды</item>
+        <item quantity="many">%d секунд</item>
+        <item quantity="other">%d секунды</item>
+    </plurals>
+
+    <!-- Ошибки и Snackbar -->
+    <string name="home_recording_unavailable">Запись пока недоступна в этой сборке</string>
+    <string name="home_low_storage">Мало места: хватит примерно на %1$d мин записи</string>
+    <string name="home_import_unsupported">Не удалось открыть файл: формат не поддерживается</string>
+    <string name="home_import_models_unavailable">Файл не обработать: модели распознавания недоступны</string>
+    <string name="home_recording_interrupted">Запись приостановлена</string>
+    <string name="home_recording_stop_failed">Запись прервана или не передана на обработку</string>
+    <string name="home_models_unavailable">Модели распознавания недоступны</string>
+    <string name="home_models_unavailable_body">Запись работает, а обработка начнётся, когда модели появятся.</string>
+    <string name="home_details">Подробнее</string>
+    <string name="home_models_details_fallback">Файлы моделей не найдены или повреждены. Переустановите приложение: в сборке для проверки модели входят в APK.</string>
+    <string name="home_close">Закрыть</string>
+    <string name="home_untitled">Без названия</string>
+</resources>

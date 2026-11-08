@@ -1,0 +1,39 @@
+{
+  "recording_id": "REPLACE_AFTER_RECORDING",
+  "scenario": "A",
+  "audio_file": "audio.wav",
+  "audio_sha256": "REPLACE_WITH_ACTUAL_SHA256",
+  "reference_file": "reference.json",
+  "reference_sha256": "REPLACE_WITH_ACTUAL_SHA256",
+  "source": {
+    "kind": "team_recording",
+    "description": "ЗАПОЛНИТЬ источник и преобразования оригинала, SHA-256 оригинала",
+    "rights_holder": "ЗАПОЛНИТЬ правообладателей без публикации личных данных",
+    "license": "ЗАПОЛНИТЬ реальные условия; согласие на обработку не означает разрешения публикации",
+    "rights_reviewed": false,
+    "rights_file": "rights.txt",
+    "rights_sha256": "REPLACE_WITH_ACTUAL_SHA256",
+    "publication_allowed": false
+  },
+  "recording": {
+    "device": "ЗАПОЛНИТЬ телефон, микрофон и версию приложения-диктофона",
+    "conditions": "ЗАПОЛНИТЬ помещение, расстояния, шум и расположение участников",
+    "recorded_at": "ЗАПОЛНИТЬ фактическую дату записи"
+  },
+  "annotation": {
+    "status": "draft",
+    "annotators": [],
+    "reviewers": [],
+    "tool": "ЗАПОЛНИТЬ локальный редактор и его версию",
+    "policy": "Реплика: непрерывный ход одного участника; пауза >=500 мс разделяет реплики; начала/концы по звуку; overlap отдельно; слышимые междометия сохраняются",
+    "word_timestamps": "unavailable",
+    "notes": "ШАБЛОН, НЕ ПРОВЕРЕННЫЙ ДАТАСЕТ. Заполнить журнал проверки, спорные места и ограничения"
+  },
+  "audio": {
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "sample_width_bytes": 2,
+    "frame_count": null,
+    "duration_seconds": null
+  }
+}

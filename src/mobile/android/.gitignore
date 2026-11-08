@@ -1,0 +1,37 @@
+*.iml
+.gradle
+.kotlin/
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.idea
+.omc
+
+# Models (see AGENTS.md: never committed)
+*.gguf
+*.onnx
+*.bin
+app/src/main/assets/models/
+/dependencies/*.aar
+/.model-cache/
+/app/src/androidTest/assets/sherpa-example.wav
+/app/src/androidTest/assets/two-speakers-en.wav
+/app/src/main/assets/third-party/
+
+# Signing keys
+*.jks
+*.keystore
+scripts/__pycache__/
+
+# Vendored inference engine (pinned by dependencies/llama-cpp.properties)
+/dependencies/llama.cpp/

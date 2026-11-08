@@ -1,0 +1,36 @@
+--- a/sherpa-onnx/csrc/offline-recognizer-ctc-impl.h
++++ b/sherpa-onnx/csrc/offline-recognizer-ctc-impl.h
+@@ -6,6 +6,8 @@
+ #define SHERPA_ONNX_CSRC_OFFLINE_RECOGNIZER_CTC_IMPL_H_
+ 
+ #include <ios>
++#include <iomanip>
++#include <stdexcept>
+ #include <memory>
+ #include <sstream>
+ #include <string>
+@@ -334,6 +336,24 @@
+                                  x_length_shape.data(), x_length_shape.size());
+ 
+     auto t = model_->Forward(std::move(x), std::move(x_length));
++    // Диагностический экспорт исходных акустических кадров, не границ слов.
++    // Используется только явно запрошенный одиночный GigaAM decode до 25 секунд.
++    if (s->GetOption("catscriptor.ctc.frames.v1") == "request") {
++      const auto shape = t[0].GetTensorTypeAndShapeInfo().GetShape();
++      const int64_t frames = t[1].GetTensorData<int64_t>()[0];
++      if (!model_->IsGigaAM() || shape.size() != 3 || shape[0] != 1 ||
++          shape[2] != 34 || frames <= 0 || frames > 625 || frames > shape[1] ||
++          model_->SubsamplingFactor() != 4 || symbol_table_["<blk>"] != 33) {
++        throw std::runtime_error("Unsupported CTC diagnostic tensor");
++      }
++      std::ostringstream os;
++      os << "v1 " << frames << " 34 40 33\n" << std::setprecision(9);
++      const float *scores = t[0].GetTensorData<float>();
++      for (int64_t i = 0; i < frames * 34; ++i) {
++        os << scores[i] << ' ';
++      }
++      s->SetOption("catscriptor.ctc.frames.v1", os.str());
++    }
+     auto results = decoder_->Decode(std::move(t[0]), std::move(t[1]));
+     int32_t frame_shift_ms = 10;
+ 

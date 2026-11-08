@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Общее -->
+    <string name="action_back">Назад</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="action_save">Сохранить</string>
+    <string name="meta_separator">%1$s · %2$s</string>
+    <string name="speaker_default_name">Спикер %1$d</string>
+    <plurals name="speakers_count">
+        <item quantity="one">%d спикер</item>
+        <item quantity="few">%d спикера</item>
+        <item quantity="many">%d спикеров</item>
+        <item quantity="other">%d спикера</item>
+    </plurals>
+    <string-array name="months_nominative">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </string-array>
+    <string-array name="months_short">
+        <item>янв.</item>
+        <item>февр.</item>
+        <item>мар.</item>
+        <item>апр.</item>
+        <item>мая</item>
+        <item>июн.</item>
+        <item>июл.</item>
+        <item>авг.</item>
+        <item>сент.</item>
+        <item>окт.</item>
+        <item>нояб.</item>
+        <item>дек.</item>
+    </string-array>
+    <string name="month_with_year">%1$s %2$d</string>
+    <string name="date_day_month">%1$d %2$s</string>
+    <string name="date_day_month_year">%1$d %2$s %3$d</string>
+    <string name="date_with_time">%1$s, %2$s</string>
+
+    <!-- Этапы обработки в метаданных строки списка -->
+    <string name="stage_prepare_audio">подготовка аудио</string>
+    <string name="stage_detect_speech">поиск речи</string>
+    <string name="stage_transcribe">распознавание</string>
+    <string name="stage_diarize">определение говорящих</string>
+    <string name="stage_correct_text">пунктуация и правка</string>
+
+    <!-- Список записей -->
+    <string name="recordings_title">Записи</string>
+    <string name="recordings_search_hint">Поиск по названию и тексту</string>
+    <string name="recordings_search_clear">Очистить поиск</string>
+    <string name="recordings_filter_all">Все</string>
+    <string name="recordings_filter_ready">Готовые</string>
+    <string name="recordings_filter_processing">В обработке</string>
+    <string name="recordings_group_today">Сегодня</string>
+    <string name="recordings_group_yesterday">Вчера</string>
+    <string name="recordings_processing_meta">Обработка %1$d%% · %2$s</string>
+    <string name="recordings_queued_meta">В очереди на обработку</string>
+    <string name="recordings_failed_meta">Ошибка: %1$s</string>
+    <string name="recordings_asr_ready_meta">Текст ASR · %1$s</string>
+    <string name="recordings_source_mic">Запись с микрофона</string>
+    <string name="recordings_source_file">Импортированный файл</string>
+    <string name="recordings_more">Действия с записью «%1$s»</string>
+    <string name="recordings_menu_rename">Переименовать</string>
+    <string name="recordings_menu_export">Экспорт…</string>
+    <string name="recordings_menu_delete">Удалить</string>
+    <string name="recordings_deleted">Удалено</string>
+    <string name="recordings_undo">Отменить</string>
+    <string name="recordings_empty_title">Пока нет записей</string>
+    <string name="recordings_empty_action">Перейти к записи</string>
+    <string name="recordings_not_found">Ничего не найдено по запросу «%1$s»</string>
+    <string name="recordings_rename_title">Переименовать запись</string>
+    <string name="recordings_rename_label">Название</string>
+
+    <!-- Расшифровка -->
+    <string name="transcript_search">Поиск по тексту</string>
+    <string name="transcript_search_hint">Найти в расшифровке</string>
+    <string name="transcript_search_close">Закрыть поиск</string>
+    <string name="transcript_search_prev">Предыдущее совпадение</string>
+    <string name="transcript_search_next">Следующее совпадение</string>
+    <string name="transcript_search_counter">%1$d из %2$d</string>
+    <string name="transcript_search_none">Нет совпадений</string>
+    <string name="transcript_share">Экспорт</string>
+    <string name="transcript_speaker_share">%1$d%%</string>
+    <string name="transcript_rename_speaker">Переименовать: %1$s</string>
+    <string name="transcript_rename_speaker_title">Имя спикера</string>
+    <string name="transcript_rename_speaker_hint">Новое имя заменит подпись во всех репликах</string>
+    <string name="transcript_rename_speaker_label">Имя</string>
+    <string name="transcript_line_actions">Действия с репликой</string>
+    <string name="transcript_action_edit">Изменить текст</string>
+    <string name="transcript_action_change_speaker">Сменить спикера</string>
+    <string name="transcript_action_reprocess">Переобработать фрагмент</string>
+    <string name="transcript_action_reprocess_unavailable">Недоступно в этой версии</string>
+    <string name="transcript_action_copy">Копировать</string>
+    <string name="transcript_copied">Текст скопирован</string>
+    <string name="transcript_edit_title">Текст реплики</string>
+    <string name="transcript_edit_hint">Таймкоды останутся прежними</string>
+    <string name="transcript_change_speaker_title">Кто говорит</string>
+    <string name="transcript_to_current">К текущей</string>
+    <string name="transcript_missing_title">Расшифровка недоступна</string>
+    <string name="transcript_missing_body">Запись удалена или ещё обрабатывается</string>
+    <string name="transcript_empty_body">В записи не найдено речи</string>
+    <string name="transcript_asr_draft">Черновик ASR</string>
+    <string name="transcript_asr_pending_stages">Спикеры ещё не определены. Коррекция текста не выполнена.</string>
+    <string name="transcript_asr_pending_llm">Спикеры определены автоматически. Коррекция текста (LLM) не выполнена.</string>
+    <string name="transcript_asr_speaker_interval">%1$s · %2$s – %3$s</string>
+    <string name="transcript_asr_empty">Речь не обнаружена</string>
+    <string name="transcript_asr_interval">%1$s – %2$s</string>
+    <string name="home_open_asr_draft">Открыть текст ASR</string>
+
+    <!-- Плеер -->
+    <string name="player_play">Воспроизвести</string>
+    <string name="player_pause">Пауза</string>
+    <string name="player_prev_line">Предыдущая реплика</string>
+    <string name="player_next_line">Следующая реплика</string>
+    <string name="player_speed_value">%1$s×</string>
+    <string name="player_speed">Скорость %1$s</string>
+    <string name="player_follow_on">Следовать за воспроизведением: включено</string>
+    <string name="player_follow_off">Следовать за воспроизведением: выключено</string>
+    <string name="player_seek">Перемотка</string>
+    <string name="player_unavailable">Воспроизведение недоступно</string>
+
+    <!-- Экспорт -->
+    <string name="export_format_txt" translatable="false">TXT</string>
+    <string name="export_format_json" translatable="false">JSON</string>
+    <string name="export_format_srt" translatable="false">SRT</string>
+    <string name="export_title">Экспорт расшифровки</string>
+    <string name="export_format">Формат</string>
+    <string name="export_preview">Предпросмотр</string>
+    <string name="export_speaker_names">Имена спикеров вместо ID</string>
+    <string name="export_speaker_names_json">В JSON всегда speaker_N</string>
+    <string name="export_with_audio">Сохранять с аудиофайлом</string>
+    <string name="export_audio_only">Только аудиофайл (без расшифровки)</string>
+    <string name="export_share">Поделиться</string>
+    <string name="export_save">Сохранить</string>
+    <string name="export_saved">Сохранено: %1$s</string>
+    <string name="export_open">Открыть</string>
+    <string name="export_save_failed">Не удалось сохранить файл</string>
+    <string name="export_share_failed">Не удалось подготовить файл</string>
+    <string name="export_no_app">Нет приложения, чтобы открыть файл</string>
+    <string name="export_chooser">Отправить расшифровку</string>
+
+    <!-- Настройки -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_models">Модели</string>
+    <string name="settings_models_ready">Модели распознавания готовы</string>
+    <string name="settings_models_ready_body">Обработка идёт только на телефоне</string>
+    <string name="settings_models_unavailable">Модели распознавания недоступны</string>
+    <string name="settings_models_unavailable_body">Запись работает, обработка нет</string>
+    <string name="settings_language">Язык распознавания</string>
+    <string name="settings_language_ru">Русский</string>
+    <string name="settings_language_ru_body">Модель распознавания поддерживает только русский</string>
+    <string name="settings_speakers">Число спикеров</string>
+    <string name="settings_speakers_title">Ожидаемое число голосов</string>
+    <string name="correction_dialog_title">Пунктуация и правка</string>
+    <string name="correction_dialog_body">Выберите режим для этой записи. Настройки приложения не изменятся. Таймкоды и спикеры останутся без изменений.</string>
+    <string name="correction_progress">Пунктуация и правка · %1$d%%</string>
+    <string name="processing_progress">Обработка · %1$d%%</string>
+    <string name="processing_progress_failed">Ошибка обработки</string>
+    <string name="correction_progress_hide">Скрыть</string>
+    <string name="correction_chip">Пунктуация</string>
+    <string name="correction_action">Пунктуация и правка</string>
+    <string name="correction_dialog_run">Запустить</string>
+    <string name="recordings_menu_correct_again">Повторить правку</string>
+    <string name="settings_speakers_auto">Авто</string>
+    <string name="settings_speakers_auto_body">Определять по записи</string>
+    <string name="settings_export">Формат экспорта по умолчанию</string>
+    <string name="settings_live">Запись</string>
+    <string name="settings_live_text">Live-текст</string>
+    <string name="settings_live_text_body">Показывать черновую расшифровку во время записи</string>
+    <string name="settings_correction">Обработка текста</string>
+    <string name="settings_correction_title">Пунктуация и правка</string>
+    <string name="settings_correction_help">Что это значит</string>
+    <string name="settings_correction_help_body">После распознавания встроенная нейросеть расставляет знаки препинания, заглавные буквы и исправляет очевидные ошибки. «Быстрая» работает заметно скорее, но может чаще ошибаться. «Умная» аккуратнее, но обрабатывает запись дольше и сильнее нагревает телефон. Всё происходит на устройстве, без интернета.</string>
+    <string name="settings_correction_off">Выкл</string>
+    <string name="settings_correction_fast">Быстрая</string>
+    <string name="settings_correction_smart">Умная</string>
+    <string name="settings_correction_off_body">Текст остаётся как распознан. Правку можно запустить позже через меню записи.</string>
+    <string name="settings_correction_fast_body">Быстро, подходит для простых и коротких записей.</string>
+    <string name="settings_correction_smart_body">Лучшее качество, обработка занимает больше времени.</string>
+</resources>

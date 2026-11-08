@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Записи с микрофона и временные файлы «Поделиться»; остальное хранилище наружу не отдаётся. -->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <files-path name="recordings" path="recordings/" />
+    <cache-path name="exports" path="exports/" />
+</paths>
