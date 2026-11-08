@@ -22,7 +22,10 @@ class SherpaModelSmokeTest {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val context = instrumentation.targetContext
         assertTrue(Build.SUPPORTED_ABIS.contains("arm64-v8a"))
-        assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission("android.permission.INTERNET"))
+        // Сборка full не просит сеть (гарантия «полностью офлайн»); lite запрашивает INTERNET только ради скачивания моделей.
+        if (org.cfm.catscriptor.BuildConfig.MODELS_BUNDLED) {
+            assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission("android.permission.INTERNET"))
+        }
         val bytes = instrumentation.context.assets.open("sherpa-example.wav").use { it.readBytes() }
         val manifest = Properties().apply {
             context.assets.open("model-manifest.properties").use { load(it) }

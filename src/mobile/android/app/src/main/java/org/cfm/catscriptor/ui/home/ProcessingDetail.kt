@@ -27,6 +27,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,7 +37,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -106,6 +109,26 @@ private fun ProcessingCard(
         label = "detailProgress",
     )
     val failed = job.stages.firstOrNull { it.status is StageStatus.Failed }
+    // На этапе LLM отмена означает «сохранить без правки текста», поэтому сначала спрашиваем подтверждение.
+    val correcting = job.stages.any { it.stage == ProcessingStage.CORRECT_TEXT && it.status is StageStatus.Running }
+    var confirmSkipCorrection by remember { mutableStateOf(false) }
+    if (confirmSkipCorrection && correcting) {
+        AlertDialog(
+            onDismissRequest = { confirmSkipCorrection = false },
+            title = { Text(stringResource(R.string.home_skip_llm_title)) },
+            text = { Text(stringResource(R.string.home_skip_llm_body)) },
+            confirmButton = {
+                TextButton(onClick = { confirmSkipCorrection = false; onCancel() }) {
+                    Text(stringResource(R.string.home_skip_llm_confirm))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { confirmSkipCorrection = false }) {
+                    Text(stringResource(R.string.home_skip_llm_dismiss))
+                }
+            },
+        )
+    }
     val source = stringResource(
         if (job.source == RecordingSource.FILE) R.string.home_source_meta_file else R.string.home_source_meta_microphone,
     )
@@ -152,7 +175,7 @@ private fun ProcessingCard(
                         Text(stringResource(R.string.home_open_asr_draft), style = StenografType.label)
                     }
                 }
-                TextButton(onClick = onCancel) {
+                TextButton(onClick = { if (correcting) confirmSkipCorrection = true else onCancel() }) {
                     Text(stringResource(R.string.home_cancel), style = StenografType.label)
                 }
                 FilledTonalButton(onClick = onCollapse) {

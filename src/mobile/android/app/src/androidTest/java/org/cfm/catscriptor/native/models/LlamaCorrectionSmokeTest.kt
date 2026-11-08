@@ -29,10 +29,13 @@ class LlamaCorrectionSmokeTest {
     @Test fun bundledLlmCorrectsRussianUtterancesFullyOffline() = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         assertTrue(Build.SUPPORTED_ABIS.contains("arm64-v8a"))
-        assertEquals(
-            PackageManager.PERMISSION_DENIED,
-            context.checkSelfPermission("android.permission.INTERNET"),
-        )
+        // Сборка full не просит сеть (гарантия «полностью офлайн»); lite запрашивает INTERNET только ради скачивания моделей.
+        if (org.cfm.catscriptor.BuildConfig.MODELS_BUNDLED) {
+            assertEquals(
+                PackageManager.PERMISSION_DENIED,
+                context.checkSelfPermission("android.permission.INTERNET"),
+            )
+        }
 
         val corrector = LlamaTextCorrector.create(context)
         val timings = mutableListOf<Pair<String, Long>>()

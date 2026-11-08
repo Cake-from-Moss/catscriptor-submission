@@ -61,6 +61,10 @@
     <string name="home_cancel">Отменить</string>
     <string name="home_collapse">Свернуть в фон</string>
     <string name="home_retry">Повторить</string>
+    <string name="home_skip_llm_title">Продолжить без правки текста?</string>
+    <string name="home_skip_llm_body">Пунктуация и правка текста локальной моделью будут пропущены. Запись сохранится с распознанным текстом, спикерами и таймкодами. Правку можно запустить позже из меню записи.</string>
+    <string name="home_skip_llm_confirm">Продолжить без правки</string>
+    <string name="home_skip_llm_dismiss">Не отменять</string>
     <string name="home_skip_stage">Сохранить без этого этапа</string>
     <string name="home_expand_processing">Показать этапы обработки</string>
 

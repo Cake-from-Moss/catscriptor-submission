@@ -18,7 +18,9 @@ val sherpaManifest = rootProject.file(
 )
 val sherpa = Properties().apply { sherpaManifest.inputStream().use { load(it) } }
 val sherpaAar = rootProject.file("dependencies/${sherpa.getProperty("file")}")
-val verifyBundledModels = tasks.register("verifyBundledModels") {
+// full: проверяется всё, включая модели в assets. lite: модели в APK не кладутся (скачиваются при первом
+// запуске), проверяются только AAR и лицензии.
+fun registerVerify(taskName: String, includeModels: Boolean) = tasks.register(taskName) {
     val manifestFile = modelManifest
     val vadManifestFile = vadManifest
     val llmManifestFile = llmManifest
@@ -33,7 +35,7 @@ val verifyBundledModels = tasks.register("verifyBundledModels") {
     inputs.file(llmFastManifest)
     inputs.file(diarizationManifest)
     inputs.file(sherpaManifest)
-    inputs.files(fileTree("src/main/assets/models"))
+    if (includeModels) inputs.files(fileTree("src/main/assets/models"))
     inputs.files(sherpaAar)
     val licenseManifest = rootProject.file("dependencies/licenses.properties")
     inputs.file(licenseManifest)
@@ -58,7 +60,8 @@ val verifyBundledModels = tasks.register("verifyBundledModels") {
             }
         }
         verify(libraryFile, libraryHash)
-        listOf(manifestFile, vadManifestFile, llmManifestFile, llmFastManifestFile, diarizationManifestFile).forEach { modelFile ->            val manifest = Properties().apply { modelFile.inputStream().use { load(it) } }
+        if (includeModels) listOf(manifestFile, vadManifestFile, llmManifestFile, llmFastManifestFile, diarizationManifestFile).forEach { modelFile ->
+            val manifest = Properties().apply { modelFile.inputStream().use { load(it) } }
             manifest.getProperty("files").split(',').forEach { name ->
                 verify(
                     File(assetsDirectory, "${manifest.getProperty("model.directory")}/$name"),
@@ -74,7 +77,14 @@ val verifyBundledModels = tasks.register("verifyBundledModels") {
     }
 }
 
-tasks.named("preBuild") { dependsOn(verifyBundledModels) }
+val verifyBundledModels = registerVerify("verifyBundledModels", includeModels = true)
+val verifyDependencies = registerVerify("verifyDependencies", includeModels = false)
+
+tasks.named("preBuild") { dependsOn(verifyDependencies) }
+// Модели нужны только вариантам full: их проверка вешается на упаковку assets именно этих вариантов.
+tasks.configureEach {
+    if (name.startsWith("merge") && name.contains("Full") && name.endsWith("Assets")) dependsOn(verifyBundledModels)
+}
 
 android {
     namespace = "org.cfm.catscriptor"
@@ -107,6 +117,22 @@ android {
         noCompress += listOf("bin", "gguf", "onnx")
     }
 
+    flavorDimensions += "dist"
+    productFlavors {
+        // Для проверки комиссией: все модели внутри APK, работает сразу, разрешения INTERNET нет.
+        create("full") {
+            dimension = "dist"
+            buildConfigField("boolean", "MODELS_BUNDLED", "true")
+        }
+        // Обычная сборка: APK маленький, модели скачиваются при первом запуске (разрешение INTERNET).
+        create("lite") {
+            dimension = "dist"
+            // Отдельный пакет: lite ставится рядом с full и не затирает его данные.
+            applicationIdSuffix = ".lite"
+            buildConfigField("boolean", "MODELS_BUNDLED", "false")
+        }
+    }
+
     buildTypes {
         release {
             proguardFiles("proguard-rules.pro")
@@ -128,6 +154,14 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+}
+
+androidComponents {
+    // lite не упаковывает каталог assets/models; манифесты моделей (маленькие) остаются.
+    onVariants(selector().withFlavor("dist" to "lite")) { variant ->
+        variant.androidResources.ignoreAssetsPatterns.add("!models")
     }
 }
 

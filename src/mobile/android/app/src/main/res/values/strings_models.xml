@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="models_title">Нужны модели распознавания</string>
+    <string name="models_explanation">Чтобы работать без интернета, приложению нужно один раз скачать модели (около %1$s МиБ). Лучше использовать Wi-Fi. После загрузки интернет больше не понадобится: вся обработка идёт на устройстве.</string>
+    <string name="models_download">Скачать модели</string>
+    <string name="models_progress">Скачано %1$s из %2$s МиБ (%3$d%%)</string>
+    <string name="models_cancel">Отмена</string>
+    <string name="models_failed">Не удалось скачать модели: %1$s</string>
+    <string name="models_retry">Повторить</string>
+</resources>

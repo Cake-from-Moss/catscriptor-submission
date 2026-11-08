@@ -10,6 +10,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import org.cfm.catscriptor.app.CatscriptorApp
 import org.cfm.catscriptor.ui.navigation.StenografApp
+import org.cfm.catscriptor.ui.setup.ModelSetupGate
 import org.cfm.catscriptor.ui.theme.StenografTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,10 +28,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val graph = (application as CatscriptorApp).graph
+        val app = application as CatscriptorApp
         setContent {
             StenografTheme {
-                StenografApp(graph)
+                // Граф создаётся только после того, как модели на месте: в сборке lite его проверка моделей
+                // иначе отработала бы до скачивания и навсегда осталась бы «недоступно».
+                ModelSetupGate { StenografApp(app.graph) }
             }
         }
     }

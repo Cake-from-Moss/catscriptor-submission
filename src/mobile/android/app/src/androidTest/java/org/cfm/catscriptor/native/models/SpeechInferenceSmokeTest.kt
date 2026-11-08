@@ -32,7 +32,10 @@ class SpeechInferenceSmokeTest {
 
     @Test fun digitalSilenceIsEmptyAndModelsReopen() = runBlocking {
         assertTrue(Build.SUPPORTED_ABIS.contains("arm64-v8a"))
-        assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission("android.permission.INTERNET"))
+        // Сборка full не просит сеть (гарантия «полностью офлайн»); lite запрашивает INTERNET только ради скачивания моделей.
+        if (org.cfm.catscriptor.BuildConfig.MODELS_BUNDLED) {
+            assertEquals(PackageManager.PERMISSION_DENIED, context.checkSelfPermission("android.permission.INTERNET"))
+        }
         fixture(0).use { audio ->
             repeat(2) {
                 val vad = SherpaVoiceActivityDetector(context)

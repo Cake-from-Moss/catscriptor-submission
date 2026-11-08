@@ -18,21 +18,23 @@ cd src/mobile/android
 # 1. Скачать и проверить модели, официальный AAR sherpa-onnx и llama.cpp (проверка SHA-256).
 python3 scripts/prepare_models.py
 
-# 2. Собрать и проверить.
-./gradlew :app:testDebugUnitTest :app:assembleDebug
-./gradlew :app:assembleRelease          # без подписи: app-release-unsigned.apk, не устанавливается
+# 2. Собрать и проверить. Два варианта: full (модели в APK) и lite (модели скачиваются при первом запуске).
+./gradlew assembleDebug assembleRelease test
+# или по отдельности: :app:assembleFullDebug, :app:assembleLiteDebug
 
 # 3. Установить на телефон (arm64-v8a, Android 11+) и запустить.
-adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb install -r app/build/outputs/apk/full/debug/app-full-debug.apk
 ```
 
-Debug APK: `app/build/outputs/apk/debug/app-debug.apk` (около 2 ГБ, модели внутри). Модели в Git не хранятся
-(`.gitignore`), сборка останавливается, если файла нет или его хеш не совпал с манифестом.
+APK: `app/build/outputs/apk/full/debug/app-full-debug.apk` (~2 ГБ, модели внутри, `INTERNET` нет) и
+`app/build/outputs/apk/lite/debug/app-lite-debug.apk` (~110 МБ, скачивает модели). Release-варианты не подписаны
+(`*-release-unsigned.apk`) и не устанавливаются. Модели в Git не хранятся (`.gitignore`); сборка `full`
+останавливается, если файла нет или его хеш не совпал с манифестом.
 
 Тесты на устройстве (нужен подключённый arm64-телефон или эмулятор):
 
 ```bash
-./gradlew :app:connectedDebugAndroidTest
+./gradlew :app:connectedFullDebugAndroidTest   # или :app:connectedLiteDebugAndroidTest (модели должны быть скачаны)
 ```
 
 Пользовательская инструкция (установка APK, импорт, экспорт JSON) — в корневом [`README.md`](../README.md).

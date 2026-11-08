@@ -53,6 +53,9 @@ internal class PipelineProcessingController(
 
     private val dispatcher = Dispatchers.IO.limitedParallelism(1)
     private val scope = CoroutineScope(SupervisorJob() + dispatcher)
+    /** Запись, чья отмена на этапе LLM должна закончиться сохранением без правки текста. */
+    private var skipCorrectionOnCancelId: String? = null
+
     private val models = MutableStateFlow<ModelsStatus>(ModelsStatus.Ready)
 
     override val modelsStatus: StateFlow<ModelsStatus> = models.asStateFlow()
@@ -106,6 +109,12 @@ internal class PipelineProcessingController(
 
     override suspend fun cancel(recordingId: String) = withContext(dispatcher) {
         if (currentId == recordingId) {
+            // Отмена на этапе LLM означает «продолжить без правки текста»: распознанный текст со спикерами
+            // уже есть, поэтому запись сохраняется без этого этапа, а не остаётся ошибкой. Подтверждение
+            // у пользователя запрашивает UI до вызова.
+            if (AudioProcessingController.state.value.stage == ProcessingStage.CORRECT_TEXT) {
+                skipCorrectionOnCancelId = recordingId
+            }
             // Запись уберёт коллектор по финальному CANCELLED сервиса.
             AudioProcessingController.cancel(appContext)
         } else {
@@ -267,9 +276,17 @@ internal class PipelineProcessingController(
             AudioProcessingPhase.CANCELLED -> {
                 val id = currentId
                 currentId = null
+                val skipCorrection = id != null && skipCorrectionOnCancelId == id
+                skipCorrectionOnCancelId = null
                 if (id != null) store.update(id) {
-                    it.copy(status = RecordingStatus.Failed(state.stage), prepareFailure = "Обработка отменена", processingState = state)
+                    it.copy(
+                        status = RecordingStatus.Failed(if (skipCorrection) ProcessingStage.CORRECT_TEXT else state.stage),
+                        prepareFailure = "Обработка отменена",
+                        // Черновик со спикерами нужен для «сохранить без этапа»: не затираем его пустым финальным состоянием.
+                        processingState = if (skipCorrection && state.speakerDraft == null) it.processingState ?: state else state,
+                    )
                 }
+                if (skipCorrection && id != null) skipStage(id, ProcessingStage.CORRECT_TEXT)
                 pump()
             }
         }
@@ -282,6 +299,7 @@ internal class PipelineProcessingController(
             !it.hidden && it.status == RecordingStatus.Queued
         } ?: return
         currentId = next.id
+        skipCorrectionOnCancelId = null
         stageStartedAtMs = SystemClock.elapsedRealtime()
         store.update(next.id) {
             it.copy(status = RecordingStatus.Processing(RUN_FRACTION, ProcessingStage.PREPARE_AUDIO))
@@ -343,8 +361,18 @@ internal class PipelineProcessingController(
             for ((manifest, readSpec) in manifests) {
             val spec = appContext.assets.open(manifest).use(readSpec)
             val broken = spec.files.firstOrNull { file ->
-                appContext.assets.open("${spec.assetDirectory}/${file.name}").use {
-                    it.available().toLong() != file.size
+                // Сборка lite кладёт скачанные модели рядом с копиями из APK (см. BundledModelStore).
+                val downloaded = java.io.File(java.io.File(appContext.noBackupFilesDir, "models/${spec.id}"), file.name)
+                if (downloaded.isFile && downloaded.length() == file.size) {
+                    false
+                } else {
+                    try {
+                        appContext.assets.open("${spec.assetDirectory}/${file.name}").use {
+                            it.available().toLong() != file.size
+                        }
+                    } catch (_: java.io.FileNotFoundException) {
+                        true
+                    }
                 }
             }
             if (broken != null) return ModelsStatus.Unavailable("Повреждён файл модели: ${broken.name}")

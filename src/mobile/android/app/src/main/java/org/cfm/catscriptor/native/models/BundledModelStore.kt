@@ -12,7 +12,11 @@ import java.util.Properties
 class ModelPreparationException(message: String, cause: Throwable? = null) :
     IOException(message, cause)
 
-data class ModelFileSpec(val name: String, val size: Long, val sha256: String)
+/**
+ * [url] нужен только сборке `lite`, где модели скачиваются при первом запуске (см. [ModelDownloader]);
+ * для упакованных в APK файлов он не используется и может отсутствовать.
+ */
+data class ModelFileSpec(val name: String, val size: Long, val sha256: String, val url: String? = null)
 
 /** Манифест проверенного комплекта; набор обязательных файлов задаётся типом модели. */
 data class BundledModelSpec(
@@ -69,6 +73,7 @@ data class BundledModelSpec(
                         safePart(name),
                         value("$name.size").toLong().also { require(it > 0) },
                         value("$name.sha256").also { require(it.matches(Regex("[0-9a-f]{64}"))) },
+                        properties.getProperty("$name.url"),
                     )
                 }.also { files ->
                     if (requiredFiles != null) {
